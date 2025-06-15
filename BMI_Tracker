@@ -1,0 +1,48 @@
+# --- Python Fundamentals Part 1 --- #
+# ------ BMI and Fitness Tracker -----#
+# Define bmi function
+def calculate_bmi(weight, height):
+    bmi = (weight / (height * height)) * 703
+    return bmi
+
+# Define bmi category function
+def categoriezed_bmi(bmi):
+    if bmi < 18.5:
+        return "Underweight"
+    elif 18.5 <= bmi < 25:
+        return "Overweight"
+    elif 25 <= bmi < 30:
+        return "Obed weight"
+    else:
+        return "Healthy weight"
+
+# Main Program -Loop and save profile to txt file
+print("Welcome you Fatty! This is a health Tracker!!")
+
+#open a file to save results
+with open("bmi_results.txt", "w") as file:
+    file.write("Name,Weight,Height,BMI,Category\n") #CSV header
+
+    while True:
+        name = input("Enter your name: ")
+
+        try:
+            weight = float(input("Enter your weight: "))
+            height = float(input("Enter your height: "))
+        except ValueError:
+            print("!! Please enter numbers for weight, height!")
+            continue
+
+        bmi = calculate_bmi(weight, height)
+        category = categoriezed_bmi(bmi)
+
+        print(f"\n{name}, Your BMI is {bmi}.")
+        print(f"Your classifies as: {category}\n")
+
+        # Save result to file
+        file.write("{},{},{},{},{}\n".format(name, weight, height, bmi, category))
+
+        again = input("Would you like to try again? (Y/N): ")
+        if again.lower() not in ["Yes", "y"]:
+            print("THX XOXO FATTY!")
+            break
