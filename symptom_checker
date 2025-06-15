@@ -1,0 +1,41 @@
+# Dictionary of symptoms and portential conditions
+symptom_db = {
+    "fever": ["flu", "covid-19", "infection"],
+    "cough": ["cold", "flu", "bronchitis", "covid-19"],
+    "headache": ["migraine", "dehydration", "stress"],
+    "fatigue": ["anemia", "thyroid issues", "stress"],
+    "nausea": ["food poisoning", "flu", "pregnancy"]
+}
+
+def find_conditions(symptom_input):
+    matches = set()
+    for symptom in symptom_input:
+        if symptom in symptom_input:
+            matches.update(symptom_db[symptom])
+    return list(matches)
+
+def main():
+    print("Welcome to the Symptom Checker!!")
+    print("Enter your symptoms separated by a comma (e.g. fever, cough):")
+
+    try:
+        user_input = input("Your symptoms separated by a comma: ")
+        symptoms = [s.strip().lower() for s in user_input.split(",")]
+
+        if not symptoms or symptoms == [""]:
+            raise ValueError("No symptoms entered")
+
+        results = find_conditions(symptoms)
+
+        if results:
+            print("n\Based on what you entered, possible conditions might include:")
+            for condition in results:
+                print(f" - {condition}")
+        else:
+            print("Sorry, I couldn't find any common conditions linked to those symptoms in my database.")
+    except Exception as e:
+        print(f"Error: {e}")
+        print("Please try again with a comma-separated list of symptoms.")
+
+#Run the program
+main()
