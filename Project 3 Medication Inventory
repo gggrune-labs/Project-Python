@@ -1,0 +1,87 @@
+# Project 3 Medication Inventory Tracker
+
+# List our Medication
+inventory = []
+
+# This func + a new medication to teh inventory list
+def add_medication():
+    name = input("Enter Medication Name: ").title()
+    dosage = input("Enter dosage (e.g. 10mg, 1 tablet): ")
+    quantity = int(input("Enter quantity in stock: "))
+
+    # Store Medication in a dictionary
+    medicaiton = {
+        "name": name,
+        "dosage": dosage,
+        "quantity": quantity,
+    }
+
+    # Add the dictionary to the inventory list
+    inventory.append(medicaiton)
+    print(f"Added {name} to inventory.")
+
+# This func displays the current inventory list
+def view_inventory():
+    if not inventory:
+        print("Inventory is not yet populated.\n")
+        return
+    # Loop through each medication adn display its info
+    for i, med in enumerate(inventory):
+        print(f"{i+1}, {med['name']} | {med['dosage']} | Qty: {med['quantity']}")
+    print()
+
+# This allows users to increase teh quantitiy of the medication
+def restock_inventory():
+    # Show the current inventory to choose from
+    view_inventory()
+    try:
+        # User Select which medication to restock
+        choice = int(input("Enter the number of medication to restock: ")) - 1
+        added_qty = int(input("Enter the number of medication to add to inventory: "))
+
+        #increase the quantity in the selected medication dictionary
+        inventory[choice] += added_qty
+        print(f"{inventory[choice]['name']} updated to {inventory[choice]['quantity']}.\n")
+    except ( IndexError, ValueError):
+        print("!! Please enter a valid number.")
+# Function to remove a medication from teh inventory
+def remove_inventory():
+    # Show inventory so the user can choose  what to remove
+    view_inventory()
+    try:
+        choice = int(input("Enter the number of medication to remove from inventory: ")) - 1
+
+        # Remove the dictionary from the inventory list
+        removed = inventory.pop(choice)
+        print(f"Removed {removed['name']} from inventory.")
+    except ( IndexError, ValueError):
+        print("!! Invalid selection.")
+
+# Shows a menu with options for the user
+def menu():
+    while True:
+        print(" Medication Inventory")
+        print("1. Add Medication")
+        print("2. View Inventory")
+        print("3. Restock Inventory")
+        print("4. Remove Inventory")
+        print("5. Exit")
+
+        # Get User Choice
+        choice = int(input("Enter your choice: "))
+
+        if choice == 1:
+            add_medication()
+        elif choice == 2:
+            view_inventory()
+        elif choice == 3:
+            restock_inventory()
+        elif choice == 4:
+            remove_inventory()
+        elif choice == 5:
+            break
+        else:
+            print("!! Invalid selection.")
+
+# Run Program
+menu()
