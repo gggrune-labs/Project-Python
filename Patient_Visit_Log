@@ -1,0 +1,65 @@
+# Project 4 Patient Visit Log
+# A logbook that records and stores patient visits using txt files
+from datetime import datetime
+# Function that collects User information and saves it to a file
+def add_patient_log():
+    # Get current date in DD-MM-YYYY format
+    visit_date = datetime.now().strftime("%d/%m/%Y")
+
+    # Ask user for basic patient info
+    name = input("Enter patient name: ")
+    reason = input("Enter patient reason: ")
+    temperature = input("Enter patient temperature: ")
+    symptoms = input("Enter patient symptoms: ")
+    heart_rate = input("Enter patient heart rate: ")
+
+    # Format the visit log as: name, reason, date, symptoms, temp, heart rate
+    log_entry = f"{name}, {reason}, {visit_date}, {symptoms}, {temperature}, {heart_rate}\n"
+
+    # Save entry to a file
+    with open("patient_visit_log.txt", "a") as file:
+        file.write(log_entry)
+
+    print("Thank you for adding to the patient log!")
+
+# This function reads and displays logs
+def view_patient_log():
+    try:
+        with open("patient_visit_log.txt", "r") as file:
+            logs = file.readlines()
+
+            if not logs:
+                print("📭 No patient logs yet.\n")
+                return
+
+            print("📋 Patient Visit Log:")
+            print("Name | Reason | Date | Symptoms | Temp (°C) | Heart Rate (bpm)")
+            print("------------------------------------------------------------------")
+
+            for line in logs:
+                fields = line.strip().split(",")
+                print(" | ".join(fields))
+            print()
+
+    except FileNotFoundError:
+        print("⚠️ Log file not found. Try adding a patient log first.\n")
+
+def menu():
+    while True:
+        print("1. Add patient log")
+        print("2. View patient log")
+        print("3. Exit")
+        choice = input("Enter your choice: ")
+
+        if choice == "1":
+            add_patient_log()
+        elif choice == "2":
+            view_patient_log()
+        elif choice == "3":
+            print("👋 Exiting program.")
+            break
+        else:
+            print("Invalid choice! Please try again.\n")
+
+
+menu()
